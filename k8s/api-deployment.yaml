@@ -1,8 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: api
-  namespace: mlops
+  name: loksai-api-deploy
 spec:
   replicas: 1
   selector:
@@ -15,6 +14,17 @@ spec:
     spec:
       containers:
       - name: api
-        image: loksaieta/api:latest
+        image: loksaieta/loksai-mlops830api:latest
         ports:
         - containerPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: loksai-api-svc
+spec:
+  selector:
+    app: api
+  ports:
+  - port: 8000
+    targetPort: 8000
